@@ -48,7 +48,8 @@ class TeamsController < ApplicationController
   end
 
   def changeowner
-    if @team.update(team_params2)
+    if @team.update(team_params)
+      AssignMailer.send_when_owner_change(@team).deliver
       redirect_to team_url, notice: 'リーダー権限を移動しました！'
     end
   end
@@ -61,9 +62,5 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
-  end
-
-  def team_params2
-    params.fetch(:team, {}).permit %i[name icon icon_cache owner_id]
   end
 end
