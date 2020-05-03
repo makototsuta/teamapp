@@ -11,4 +11,9 @@ class AssignMailer < ApplicationMailer
     @team = team
     mail to: @team.owner.email, subject: 'リーダー変更通知。'
   end
+
+  def send_when_agenda_destroy(email)
+    @email = email
+    mail to: @email, subject: 'アジェンダ削除通知。'
+  end
 end
