@@ -51,6 +51,9 @@ class TeamsController < ApplicationController
 
   def set_team
     @team = Team.friendly.find(params[:id])
+    unless @team.owner == current_user
+      render :show
+    end
   end
 
   def team_params
